@@ -14,6 +14,7 @@ func init() {
 
 func main() {
 	displayHello()
+	displayHelp()
 	processFile("./example.txt", processLine)
 }
 
@@ -34,6 +35,11 @@ func processFile(filename string, callback func(string)) error {
 	}
 
 	return nil
+}
+func displayHelp(){
+	fmt.Println(
+		` some help text actually
+		`)
 }
 
 func readEntireFile(filename string) string {
