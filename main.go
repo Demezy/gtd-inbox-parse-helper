@@ -14,7 +14,12 @@ func init() {
 
 func main() {
 	displayHello()
-	processFile("./example.txt", func(s string) { fmt.Println(s) })
+	processFile("./example.txt", processLine)
+}
+
+func processLine(line string) {
+	fmt.Println(line)
+
 }
 
 func processFile(filename string, callback func(string)) error {
