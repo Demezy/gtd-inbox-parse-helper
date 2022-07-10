@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
 )
@@ -39,9 +40,20 @@ func main() {
 
 	actions := Actions{}
 	setupHotKeys(actions)
+	filename, err:= getFilenameFromCli()
+	if err != nil{
+		panic(err)
+	}
 
-	processFile("./example.txt",
+	processFile(filename,
 		func(str string) { processLine(actions, str) })
+}
+
+func getFilenameFromCli() (string , error){
+	if len(os.Args) <2 {
+		return "", errors.New("Filename is not provided")
+	}
+	return os.Args[1], nil
 }
 
 func setupHotKeys(acts Actions) {
