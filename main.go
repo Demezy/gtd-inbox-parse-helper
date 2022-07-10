@@ -38,8 +38,8 @@ const prefix string = "output/"
 func main() {
 	actions := Actions{}
 	setupHotKeys(actions)
-	filename, err:= getFilenameFromCli()
-	if err != nil{
+	filename, err := getFilenameFromCli()
+	if err != nil {
 		displayHelp()
 		return
 	}
@@ -48,14 +48,14 @@ func main() {
 		func(str string) { processLine(actions, str) })
 }
 
-func getFilenameFromCli() (string , error){
-	if len(os.Args) <2 {
+func getFilenameFromCli() (string, error) {
+	if len(os.Args) < 2 {
 		return "", errors.New("Filename is not provided")
 	}
 	return os.Args[1], nil
 }
 
-var keybindings = map[string]string {
+var keybindings = map[string]string{
 	"w": "todo.txt",
 	"s": "someday.txt",
 	"a": "calendar.txt",
@@ -66,7 +66,7 @@ var keybindings = map[string]string {
 }
 
 func setupHotKeys(acts Actions) {
-	for key, file := range keybindings{
+	for key, file := range keybindings {
 		acts[key] = getWriteLineCallback(prefix + file)
 	}
 }
@@ -101,7 +101,7 @@ func processFile(filename string, callback func(string)) error {
 func displayHelp() {
 	helpMessage := ` usage <program name :)> filename
 Use keys quickly sort lines for files.`
-	for key, file := range keybindings{
+	for key, file := range keybindings {
 		helpMessage += fmt.Sprintf("\n\t%s - %s", key, file)
 	}
 	fmt.Println(helpMessage)
