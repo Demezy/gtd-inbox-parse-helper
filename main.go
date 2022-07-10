@@ -26,34 +26,38 @@ func test() {
 	fmt.Println(<-c)
 }
 
+// TODO use decorator to keep only one file open
+type Actions = map[string]func(string)
+
+func myPrint(str string){
+	fmt.Println(str)
+}
 func main() {
 	displayHello()
 	displayHelp()
-	processFile("./example.txt", processLine)
+
+	actions := Actions{
+	"w": myPrint,
+	"a": myPrint,
+	"s": myPrint,
+	"d": myPrint,
+	"q": myPrint,
+	"e": myPrint,
+	}
+	
+	processFile("./example.txt",
+		func(str string) { processLine(actions, str) })
 }
 
-
-
-func processLine(line string) {
+func processLine(act Actions, line string) {
 	fmt.Println()
 	fmt.Println(line)
 	choice := readLine()
-	switch choice {
-	case "w":
-		fmt.Println("move w")
-	case "a":
-		fmt.Println("move a")
-	case "s":
-		fmt.Println("move s")
-	case "d":
-		fmt.Println("move d")
-	case "q":
-		fmt.Println("move q")
-	case "e":
-		fmt.Println("move e")
-	default:
+	if command, ok := act[choice]; !ok {
 		fmt.Println("Please, try again")
-		processLine(line)
+		processLine(act, line)
+	} else {
+		command(line)
 	}
 
 }
