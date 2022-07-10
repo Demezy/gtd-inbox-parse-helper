@@ -33,20 +33,35 @@ func myPrint(str string) {
 	fmt.Println(str)
 }
 
+func getFileForAppending(filename string) (*os.File, error) {
+	f, err := os.OpenFile(filename, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
+	if err != nil {
+		return nil, err
+	}
+	return f, nil
+}
+
+func saveLineToFile(line string) {
+	f, _ := getFileForAppending("./example2.txt")
+	defer f.Close()
+	f.WriteString(line)
+}
+
 func main() {
 	displayHelp()
 
-	actions := Actions{
-		"w": myPrint,
-		"a": myPrint,
-		"s": myPrint,
-		"d": myPrint,
-		"q": myPrint,
-		"e": myPrint,
-	}
+	// actions := Actions{
+	// 	"w": myPrint,
+	// 	"a": myPrint,
+	// 	"s": myPrint,
+	// 	"d": myPrint,
+	// 	"q": myPrint,
+	// 	"e": myPrint,
+	// }
+	saveLineToFile("test line")
 
-	processFile("./example.txt",
-		func(str string) { processLine(actions, str) })
+	// processFile("./example.txt",
+	// 	func(str string) { processLine(actions, str) })
 }
 
 func processLine(act Actions, line string) {
