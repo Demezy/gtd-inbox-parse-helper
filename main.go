@@ -72,7 +72,6 @@ func setupHotKeys(acts Actions) {
 }
 
 func processLine(act Actions, line string) {
-	fmt.Println()
 	fmt.Println(line)
 	choice := readLine()
 	if command, ok := act[choice]; !ok {
@@ -81,7 +80,7 @@ func processLine(act Actions, line string) {
 	} else {
 		command(line)
 	}
-
+	fmt.Println()
 }
 
 func processFile(filename string, callback func(string)) error {
@@ -90,7 +89,10 @@ func processFile(filename string, callback func(string)) error {
 		return err
 	}
 	scanner := bufio.NewScanner(file)
+	var i int = -1
 	for scanner.Scan() {
+		i++
+		fmt.Println(i)
 		var line string = scanner.Text()
 		callback(line)
 	}
