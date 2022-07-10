@@ -20,6 +20,21 @@ func main() {
 
 func processLine(line string) {
 	fmt.Println(line)
+	choice := readLine()
+	switch choice {
+	case "w":
+		fmt.Println("move w")
+	case "a":
+		fmt.Println("move a")
+	case "s":
+		fmt.Println("move s")
+	case "d":
+		fmt.Println("move d")
+	case "q":
+		fmt.Println("move q")
+	case "e":
+		fmt.Println("move e")
+	}
 
 }
 
@@ -36,7 +51,8 @@ func processFile(filename string, callback func(string)) error {
 
 	return nil
 }
-func displayHelp(){
+
+func displayHelp() {
 	fmt.Println(
 		` some help text actually
 		`)
