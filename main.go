@@ -37,17 +37,20 @@ func main() {
 	prefix := "output/"
 	os.Mkdir(prefix, 0755)
 
-	actions := Actions{
-		"w": getWriteLineCallback(prefix + "w.txt"),
-		"a": getWriteLineCallback(prefix + "a.txt"),
-		"s": getWriteLineCallback(prefix + "s.txt"),
-		"d": getWriteLineCallback(prefix + "d.txt"),
-		"q": getWriteLineCallback(prefix + "q.txt"),
-		"e": getWriteLineCallback(prefix + "e.txt"),
-	}
+	actions := Actions{}
+	setupHotKeys(actions)
 
 	processFile("./example.txt",
 		func(str string) { processLine(actions, str) })
+}
+func setupHotKeys(acts Actions) {
+	const prefix string = "output/"
+	acts["w"] = getWriteLineCallback(prefix + "w.txt")
+	acts["a"] = getWriteLineCallback(prefix + "a.txt")
+	acts["s"] = getWriteLineCallback(prefix + "s.txt")
+	acts["d"] = getWriteLineCallback(prefix + "d.txt")
+	acts["q"] = getWriteLineCallback(prefix + "q.txt")
+	acts["e"] = getWriteLineCallback(prefix + "e.txt")
 }
 
 func processLine(act Actions, line string) {
