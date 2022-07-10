@@ -1,11 +1,8 @@
 package main
 
 import (
-	"fmt"
-	"time"
-	// "io"
 	"bufio"
-	"log"
+	"fmt"
 	"os"
 )
 
@@ -13,25 +10,7 @@ func init() {
 	displayHello()
 }
 
-func expensiveOperation(c chan int) {
-	c <- 4
-	time.Sleep(5 * time.Second)
-	c <- 2
-}
-
-func test() {
-	c := make(chan int)
-	go expensiveOperation(c)
-	// fmt.Println(<-c)
-	fmt.Println(<-c)
-}
-
-// TODO use decorator to keep only one file open
 type Actions = map[string]func(string)
-
-func myPrint(str string) {
-	fmt.Println(str)
-}
 
 func getFileForAppending(filename string) (*os.File, error) {
 	f, err := os.OpenFile(filename, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
@@ -43,10 +22,10 @@ func getFileForAppending(filename string) (*os.File, error) {
 
 func getWriteLineCallback(filename string) func(string) {
 	f, err := getFileForAppending(filename)
-	if err!= nil{
+	if err != nil {
 		panic(err)
 	}
-	return func(str string){
+	return func(str string) {
 		f.WriteString(str)
 		f.WriteString("\n")
 	}
@@ -55,7 +34,7 @@ func getWriteLineCallback(filename string) func(string) {
 func main() {
 	displayHelp()
 
-	prefix:="output/"
+	prefix := "output/"
 	os.Mkdir(prefix, 0755)
 
 	actions := Actions{
@@ -104,30 +83,12 @@ func displayHelp() {
 		`)
 }
 
-func readEntireFile(filename string) string {
-	file, err := os.ReadFile(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return string(file)
-
-}
-
 func displayHello() {
 	fmt.Println(`  ___           _                        ____
  |_ _|  _ __   | |__     ___   __  __   |  _ \    __ _   _ __   ___    ___   _ __
   | |  | '_ \  | '_ \   / _ \  \ \/ /   | |_) |  / _\ | | '__| / __|  / _ \ | '__|
   | |  | | | | | |_) | | (_) |  >  <    |  __/  | (_| | | |    \__ \ |  __/ | |
  |___| |_| |_| |_.__/   \___/  /_/\_\   |_|      \__,_| |_|    |___/  \___| |_|`)
-}
-
-func getHello(num int) string {
-	hellos := []string{
-		"Hi, aboba",
-		"Hello, biba",
-		"Dobryi den, milsdar",
-	}
-	return (hellos[num%(len(hellos))])
 }
 
 func readLine() string {
