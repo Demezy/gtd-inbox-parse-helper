@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 	// "io"
 	"bufio"
 	"log"
@@ -10,6 +11,19 @@ import (
 
 func init() {
 	fmt.Println("Init")
+}
+
+func expensiveOperation(c chan int) {
+	c <- 4
+	time.Sleep(5 * time.Second)
+	c <- 2
+}
+
+func test() {
+	c := make(chan int)
+	go expensiveOperation(c)
+	// fmt.Println(<-c)
+	fmt.Println(<-c)
 }
 
 func main() {
