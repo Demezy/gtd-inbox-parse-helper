@@ -36,13 +36,12 @@ func getWriteLineCallback(filename string) func(string) {
 const prefix string = "output/"
 
 func main() {
-	displayHelp()
-
 	actions := Actions{}
 	setupHotKeys(actions)
 	filename, err:= getFilenameFromCli()
 	if err != nil{
-		panic(err)
+		displayHelp()
+		return
 	}
 
 	processFile(filename,
@@ -100,7 +99,8 @@ func processFile(filename string, callback func(string)) error {
 }
 
 func displayHelp() {
-	helpMessage := `Use keys quickly sort lines for files.`
+	helpMessage := ` usage <program name :)> filename
+Use keys quickly sort lines for files.`
 	for key, file := range keybindings{
 		helpMessage += fmt.Sprintf("\n\t%s - %s", key, file)
 	}
