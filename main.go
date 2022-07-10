@@ -29,7 +29,7 @@ func test() {
 // TODO use decorator to keep only one file open
 type Actions = map[string]func(string)
 
-func myPrint(str string){
+func myPrint(str string) {
 	fmt.Println(str)
 }
 
@@ -38,14 +38,14 @@ func main() {
 	displayHelp()
 
 	actions := Actions{
-	"w": myPrint,
-	"a": myPrint,
-	"s": myPrint,
-	"d": myPrint,
-	"q": myPrint,
-	"e": myPrint,
+		"w": myPrint,
+		"a": myPrint,
+		"s": myPrint,
+		"d": myPrint,
+		"q": myPrint,
+		"e": myPrint,
 	}
-	
+
 	processFile("./example.txt",
 		func(str string) { processLine(actions, str) })
 }
