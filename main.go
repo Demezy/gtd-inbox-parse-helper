@@ -32,6 +32,9 @@ func main() {
 	processFile("./example.txt", processLine)
 }
 
+func performAction(){
+}
+
 func processLine(line string) {
 	fmt.Println(line)
 	choice := readLine()
@@ -100,7 +103,6 @@ func getHello(num int) string {
 
 func readLine() string {
 	var str string
-	fmt.Println("Enter string")
 	fmt.Scan(&str)
 	return str
 }
