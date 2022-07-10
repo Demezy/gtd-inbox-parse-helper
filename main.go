@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	fmt.Println("Init")
+	displayHello()
 }
 
 func expensiveOperation(c chan int) {
@@ -34,7 +34,6 @@ func myPrint(str string) {
 }
 
 func main() {
-	displayHello()
 	displayHelp()
 
 	actions := Actions{
