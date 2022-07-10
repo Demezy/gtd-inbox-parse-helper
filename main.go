@@ -32,10 +32,10 @@ func main() {
 	processFile("./example.txt", processLine)
 }
 
-func performAction(){
-}
+
 
 func processLine(line string) {
+	fmt.Println()
 	fmt.Println(line)
 	choice := readLine()
 	switch choice {
@@ -51,6 +51,9 @@ func processLine(line string) {
 		fmt.Println("move q")
 	case "e":
 		fmt.Println("move e")
+	default:
+		fmt.Println("Please, try again")
+		processLine(line)
 	}
 
 }
