@@ -56,13 +56,20 @@ func getFilenameFromCli() (string , error){
 	return os.Args[1], nil
 }
 
+var keybindings = map[string]string {
+	"w": "todo.txt",
+	"s": "someday.txt",
+	"a": "calendar.txt",
+	"d": "project.txt",
+	"q": "deleted.txt",
+	"e": "notes.txt",
+	"f": "waiting.txt",
+}
+
 func setupHotKeys(acts Actions) {
-	acts["w"] = getWriteLineCallback(prefix + "w.txt")
-	acts["a"] = getWriteLineCallback(prefix + "a.txt")
-	acts["s"] = getWriteLineCallback(prefix + "s.txt")
-	acts["d"] = getWriteLineCallback(prefix + "d.txt")
-	acts["q"] = getWriteLineCallback(prefix + "q.txt")
-	acts["e"] = getWriteLineCallback(prefix + "e.txt")
+	for key, file := range keybindings{
+		acts[key] = getWriteLineCallback(prefix + file)
+	}
 }
 
 func processLine(act Actions, line string) {
@@ -93,9 +100,11 @@ func processFile(filename string, callback func(string)) error {
 }
 
 func displayHelp() {
-	fmt.Println(
-		` use w,a,s,d,q,e to do something
-		`)
+	helpMessage := `Use keys quickly sort lines for files.`
+	for key, file := range keybindings{
+		helpMessage += fmt.Sprintf("\n\t%s - %s", key, file)
+	}
+	fmt.Println(helpMessage)
 }
 
 func displayHello() {
