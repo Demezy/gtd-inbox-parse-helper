@@ -41,27 +41,34 @@ func getFileForAppending(filename string) (*os.File, error) {
 	return f, nil
 }
 
-func saveLineToFile(line string) {
-	f, _ := getFileForAppending("./example2.txt")
-	defer f.Close()
-	f.WriteString(line)
+func getWriteLineCallback(filename string) func(string) {
+	f, err := getFileForAppending(filename)
+	if err!= nil{
+		panic(err)
+	}
+	return func(str string){
+		f.WriteString(str)
+		f.WriteString("\n")
+	}
 }
 
 func main() {
 	displayHelp()
 
-	// actions := Actions{
-	// 	"w": myPrint,
-	// 	"a": myPrint,
-	// 	"s": myPrint,
-	// 	"d": myPrint,
-	// 	"q": myPrint,
-	// 	"e": myPrint,
-	// }
-	saveLineToFile("test line")
+	prefix:="output/"
+	os.Mkdir(prefix, 0755)
 
-	// processFile("./example.txt",
-	// 	func(str string) { processLine(actions, str) })
+	actions := Actions{
+		"w": getWriteLineCallback(prefix + "w.txt"),
+		"a": getWriteLineCallback(prefix + "a.txt"),
+		"s": getWriteLineCallback(prefix + "s.txt"),
+		"d": getWriteLineCallback(prefix + "d.txt"),
+		"q": getWriteLineCallback(prefix + "q.txt"),
+		"e": getWriteLineCallback(prefix + "e.txt"),
+	}
+
+	processFile("./example.txt",
+		func(str string) { processLine(actions, str) })
 }
 
 func processLine(act Actions, line string) {
