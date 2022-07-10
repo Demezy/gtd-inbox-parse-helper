@@ -32,6 +32,7 @@ type Actions = map[string]func(string)
 func myPrint(str string){
 	fmt.Println(str)
 }
+
 func main() {
 	displayHello()
 	displayHelp()
@@ -54,7 +55,7 @@ func processLine(act Actions, line string) {
 	fmt.Println(line)
 	choice := readLine()
 	if command, ok := act[choice]; !ok {
-		fmt.Println("Please, try again")
+		displayHelp()
 		processLine(act, line)
 	} else {
 		command(line)
@@ -78,7 +79,7 @@ func processFile(filename string, callback func(string)) error {
 
 func displayHelp() {
 	fmt.Println(
-		` some help text actually
+		` use w,a,s,d,q,e to do something
 		`)
 }
 
