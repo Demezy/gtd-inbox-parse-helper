@@ -8,6 +8,7 @@ import (
 
 func init() {
 	displayHello()
+	os.Mkdir(prefix, 0755)
 }
 
 type Actions = map[string]func(string)
@@ -31,11 +32,10 @@ func getWriteLineCallback(filename string) func(string) {
 	}
 }
 
+const prefix string = "output/"
+
 func main() {
 	displayHelp()
-
-	prefix := "output/"
-	os.Mkdir(prefix, 0755)
 
 	actions := Actions{}
 	setupHotKeys(actions)
@@ -43,8 +43,8 @@ func main() {
 	processFile("./example.txt",
 		func(str string) { processLine(actions, str) })
 }
+
 func setupHotKeys(acts Actions) {
-	const prefix string = "output/"
 	acts["w"] = getWriteLineCallback(prefix + "w.txt")
 	acts["a"] = getWriteLineCallback(prefix + "a.txt")
 	acts["s"] = getWriteLineCallback(prefix + "s.txt")
